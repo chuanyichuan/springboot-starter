@@ -1,0 +1,6 @@
+cc.kevinlu.logger.starter.storage.ElasticsearchSupport
+cc.kevinlu.logger.starter.storage.MongoSupport
+cc.kevinlu.logger.starter.storage.MysqlSupport
+cc.kevinlu.logger.starter.storage.NacosSupport
+cc.kevinlu.logger.starter.storage.RedisClusterSupport
+cc.kevinlu.logger.starter.storage.RedisSupport
