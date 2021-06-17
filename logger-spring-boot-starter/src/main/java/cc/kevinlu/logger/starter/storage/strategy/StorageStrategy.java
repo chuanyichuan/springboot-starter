@@ -11,8 +11,6 @@ public interface StorageStrategy {
 
     /**
      * 初始化参数
-     * 
-     * @param appContextUtils
      */
     void init();
 

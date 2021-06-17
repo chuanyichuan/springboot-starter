@@ -17,8 +17,8 @@ public class ExLogHelper {
     /**
      * 计算日志hash
      * 
-     * @param exLog
-     * @return
+     * @param exLog 日志主体
+     * @return 日志hash值
      */
     public static int logHash(ExceptionLog exLog) {
         // 计算hash
@@ -27,12 +27,6 @@ public class ExLogHelper {
         return key.hashCode() + log.hashCode();
     }
 
-    /**
-     * 
-     * @param exLog
-     * @param content
-     * @return
-     */
     public static JSONArray exLogArray(ExceptionLog exLog, String content) {
         JSONArray array = new JSONArray();
         if (StringUtils.isNotBlank(content)) {
