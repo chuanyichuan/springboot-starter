@@ -24,7 +24,29 @@ public class ExLogHelper {
         // 计算hash
         String key = exLog.getClazz() + "#" + exLog.getMethod();
         String log = exLog.getMessage();
-        return key.hashCode() + log.hashCode();
+        return getHash(key) + log.hashCode();
+    }
+
+    /**
+     * 使用FNV1_32_HASH算法计算服务器的Hash值
+     * 
+     * @param str
+     * @return
+     */
+    private static int getHash(String str) {
+        final int p = 16777619;
+        int hash = (int) 2166136261L;
+        for (int i = 0; i < str.length(); i++) {
+            hash = (hash ^ str.charAt(i)) * p;
+        }
+        hash += hash << 13;
+        hash ^= hash >> 7;
+        hash += hash << 3;
+        hash ^= hash >> 17;
+        hash += hash << 5;
+
+        // 如果算出来的值为负数则取其绝对值
+        return Math.abs(hash);
     }
 
     public static JSONArray exLogArray(ExceptionLog exLog, String content) {
