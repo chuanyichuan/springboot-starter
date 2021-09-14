@@ -6,7 +6,7 @@ package cc.kevinlu.json.serializer.starter.support;
  * 
  * @author chuan
  */
-public interface JSONFilterSupport {
+public interface JSONFilterSupport<T> {
 
     /**
      * 校验字段是否需要持久化
@@ -14,7 +14,7 @@ public interface JSONFilterSupport {
      * @param t 待校验参数
      * @return
      */
-    default boolean serial(Object t) {
+    default boolean serial(T t) {
         return false;
     }
 

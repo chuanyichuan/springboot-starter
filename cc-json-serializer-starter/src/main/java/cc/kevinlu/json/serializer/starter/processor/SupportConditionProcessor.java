@@ -3,7 +3,7 @@ package cc.kevinlu.json.serializer.starter.processor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import cc.kevinlu.ccstarterdemo.JSONFilterSupport;
+import cc.kevinlu.json.serializer.starter.support.JSONFilterSupport;
 
 /**
  * @author chuan
