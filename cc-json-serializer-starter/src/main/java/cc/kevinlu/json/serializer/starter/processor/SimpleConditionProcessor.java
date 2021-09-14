@@ -7,9 +7,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.StringUtils;
 
-import cc.kevinlu.ccstarterdemo.JSONFilterSupport;
-import cc.kevinlu.ccstarterdemo.common.Constants;
-import cc.kevinlu.ccstarterdemo.utils.SpringEmbeddedValueUtils;
+import cc.kevinlu.json.serializer.starter.common.Constants;
+import cc.kevinlu.json.serializer.starter.support.JSONFilterSupport;
+import cc.kevinlu.json.serializer.starter.utils.SpringEmbeddedValueUtils;
 
 /**
  * @author chuan
