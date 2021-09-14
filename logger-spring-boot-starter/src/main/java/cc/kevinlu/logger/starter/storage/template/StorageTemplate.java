@@ -46,7 +46,7 @@ public class StorageTemplate implements InitializingBean {
     /**
      * 获取所有的存储策略
      * 
-     * @return
+     * @return 存储策略
      */
     private StorageStrategy scanStrategy() {
         StorageStrategy storageStrategy = null;
@@ -82,7 +82,7 @@ public class StorageTemplate implements InitializingBean {
     /**
      * 记录异常日志
      * 
-     * @param exLog
+     * @param exLog 日志主体
      */
     public void record(ExceptionLog exLog) {
         StorageStrategy storageStrategy = scanStrategy();

@@ -14,8 +14,6 @@ public @interface PSlf4jEx {
 
     /**
      * 通知次数，默认为3次
-     * 
-     * @return
      */
     int times() default 3;
 
