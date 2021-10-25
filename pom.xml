@@ -15,9 +15,11 @@
     </properties>
 
     <modules>
+        <module>cc-json-serializer-starter</module>
         <module>redis-spring-boot-starter</module>
         <module>mybatis-plugins-spring-boot-starter</module>
         <module>logger-spring-boot-starter</module>
+        <module>thread-pool-monitor-starter</module>
     </modules>
 
     <dependencies>
