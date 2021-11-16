@@ -10,15 +10,20 @@ import java.util.function.Consumer;
 
 /**
  * The type Resizeable blocking queue.
+ * 
+ * 基于LinkedBlockingQueue 实现的一个可变队列容量的阻塞队列
+ * 把capacity去掉final，变成一个可变参数。再新增get和set方法
  *
  * @param <E> the type parameter
  */
 public class ResizeableBlockingQueue<E> extends AbstractQueue<E> implements BlockingQueue<E>, java.io.Serializable {
     private static final long serialVersionUID = -1232131234709194L;
-    /*
-     *  基于LinkedBlockingQueue 实现的一个可变队列容量的阻塞队列
+
+    /**
+     * 基于LinkedBlockingQueue 实现的一个可变队列容量的阻塞队列
+     * 把capacity去掉final，变成一个可变参数。再新增get和set方法
      *
-     * */
+     */
 
     /**
      * The type Node.
