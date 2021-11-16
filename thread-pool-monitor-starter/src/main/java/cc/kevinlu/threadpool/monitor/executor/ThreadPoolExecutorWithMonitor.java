@@ -13,22 +13,27 @@ public class ThreadPoolExecutorWithMonitor extends ThreadPoolExecutor {
     /**
      * 默认拒绝策略
      */
-    private static final RejectedExecutionHandler DEFAULT_HANDLER   = new AbortPolicy();
+    private static final RejectedExecutionHandler DEFAULT_HANDLER     = new AbortPolicy();
 
     /**
      * 默认线程池名称
      */
-    private static final String                   DEFAULT_POOL_NAME = "CC-Monitor-Task";
+    private static final String                   DEFAULT_POOL_NAME   = "CC-Monitor-Task";
 
-    public static ThreadFactory                   threadFactory     = new MonitorThreadFactory(DEFAULT_POOL_NAME);
+    public static ThreadFactory                   threadFactory       = new MonitorThreadFactory(DEFAULT_POOL_NAME);
 
     private long                                  minCostTime;
 
     private long                                  maxCostTime;
 
-    private AtomicLong                            totalCostTime     = new AtomicLong(0L);
+    private AtomicLong                            totalCostTime       = new AtomicLong(0L);
 
-    private ThreadLocal<Long>                     startTimeTl       = new ThreadLocal<>();
+    private ThreadLocal<Long>                     startTimeTl         = new ThreadLocal<>();
+
+    /**
+     * 当前线程任务执行耗时
+     */
+    private long                                  currentTaskCostTime = 0L;
 
     public ThreadPoolExecutorWithMonitor(int corePoolSize, int maximumPoolSize, long keepAliveTime, TimeUnit unit,
                                          BlockingQueue<Runnable> workQueue) {
@@ -62,14 +67,14 @@ public class ThreadPoolExecutorWithMonitor extends ThreadPoolExecutor {
 
     @Override
     protected void afterExecute(Runnable r, Throwable t) {
-        long costTime = System.currentTimeMillis() - startTimeTl.get();
+        this.currentTaskCostTime = System.currentTimeMillis() - startTimeTl.get();
         startTimeTl.remove();
-        maxCostTime = costTime > maxCostTime ? costTime : maxCostTime;
+        maxCostTime = this.currentTaskCostTime > maxCostTime ? this.currentTaskCostTime : maxCostTime;
         if (getCompletedTaskCount() == 0L) {
-            minCostTime = costTime;
+            minCostTime = this.currentTaskCostTime;
         }
-        minCostTime = costTime < minCostTime ? costTime : minCostTime;
-        totalCostTime.getAndAdd(costTime);
+        minCostTime = this.currentTaskCostTime < minCostTime ? this.currentTaskCostTime : minCostTime;
+        totalCostTime.getAndAdd(this.currentTaskCostTime);
         super.afterExecute(r, t);
     }
 
@@ -83,6 +88,10 @@ public class ThreadPoolExecutorWithMonitor extends ThreadPoolExecutor {
 
     public long getTotalCostTime() {
         return totalCostTime.get();
+    }
+
+    public long getCurrentTaskCostTime() {
+        return currentTaskCostTime;
     }
 
     public long getAvgCostTime() {
