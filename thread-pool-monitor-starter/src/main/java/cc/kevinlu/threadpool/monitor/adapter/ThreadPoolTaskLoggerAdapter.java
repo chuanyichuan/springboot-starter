@@ -1,4 +1,4 @@
-package cc.kevinlu.threadpool.monitor.logging;
+package cc.kevinlu.threadpool.monitor.adapter;
 
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.Future;
@@ -9,7 +9,7 @@ import org.springframework.util.StringUtils;
 
 import cc.kevinlu.threadpool.monitor.executor.ThreadPoolExecutorWithMonitor;
 import cc.kevinlu.threadpool.monitor.manager.ThreadPoolMonitorManager;
-import cc.kevinlu.threadpool.monitor.utils.SpringContextUtils;
+import cc.kevinlu.threadpool.monitor.utils.ThreadPoolSpringContextUtils;
 
 /**
  * 线程池任务运行日志
@@ -31,7 +31,7 @@ public abstract class ThreadPoolTaskLoggerAdapter {
 
     public void execute(String poolName, Runnable r) {
         this.poolName = poolName;
-        this.runnable = runnable;
+        this.runnable = r;
         before();
         try {
             getExecutor();
@@ -46,7 +46,7 @@ public abstract class ThreadPoolTaskLoggerAdapter {
 
     public Future<?> submit(String poolName, Runnable r) {
         this.poolName = poolName;
-        this.runnable = runnable;
+        this.runnable = r;
         before();
         try {
             getExecutor();
@@ -69,7 +69,7 @@ public abstract class ThreadPoolTaskLoggerAdapter {
             this.executor = new ThreadPoolExecutorWithMonitor(5, 10, 10, TimeUnit.MILLISECONDS,
                     new ArrayBlockingQueue<>(20));
         } else {
-            this.executor = SpringContextUtils.getBean(ThreadPoolMonitorManager.class)
+            this.executor = ThreadPoolSpringContextUtils.getBean(ThreadPoolMonitorManager.class)
                     .getThreadPoolExecutor(this.poolName);
         }
     }
@@ -84,11 +84,11 @@ public abstract class ThreadPoolTaskLoggerAdapter {
     /**
      * 日志输出
      */
-    protected abstract void printLog();
+    public abstract void printLog();
 
     /**
      * 日志清除
      */
-    protected abstract void clearLog();
+    public abstract void clearLog();
 
 }
