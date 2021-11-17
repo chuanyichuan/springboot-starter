@@ -14,14 +14,24 @@ public class AdapterFactory {
 
     private static Constructor<? extends ThreadPoolTaskLoggerAdapter> logConstructor;
 
-    public static ThreadPoolTaskLoggerAdapter getCommonLog() {
+    private static Class<? extends ThreadPoolTaskLoggerAdapter>       adapterClass;
+
+    private static ThreadPoolTaskLoggerAdapter                        loggerAdapter;
+
+    public static ThreadPoolTaskLoggerAdapter getLog() {
+        if (loggerAdapter != null) {
+            return loggerAdapter;
+        }
         return getLog(JakartaCommonsAdapter.class);
     }
 
     public static ThreadPoolTaskLoggerAdapter getLog(Class<? extends ThreadPoolTaskLoggerAdapter> implClass) {
         try {
+            if (adapterClass != null && implClass.getName().equals(adapterClass.getName())) {
+                return loggerAdapter;
+            }
             setImplementation(implClass);
-            return logConstructor.newInstance();
+            return loggerAdapter;
         } catch (Throwable t) {
             throw new LogException("Error creating logger for logger [" + logConstructor + "].  Cause: " + t, t);
         }
@@ -29,7 +39,9 @@ public class AdapterFactory {
 
     private static void setImplementation(Class<? extends ThreadPoolTaskLoggerAdapter> implClass) {
         try {
+            adapterClass = implClass;
             logConstructor = implClass.getConstructor();
+            loggerAdapter = logConstructor.newInstance();
         } catch (Throwable t) {
             throw new LogException("Error setting Log implementation.  Cause: " + t, t);
         }

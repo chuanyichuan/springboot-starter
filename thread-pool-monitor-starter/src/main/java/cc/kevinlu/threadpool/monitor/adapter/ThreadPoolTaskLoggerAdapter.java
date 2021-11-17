@@ -74,6 +74,9 @@ public abstract class ThreadPoolTaskLoggerAdapter {
         }
     }
 
+    /**
+     * 执行中日志记录
+     */
     protected abstract void running();
 
     /**
@@ -83,12 +86,14 @@ public abstract class ThreadPoolTaskLoggerAdapter {
 
     /**
      * 日志输出
+     * @return 
      */
-    public abstract void printLog();
+    public abstract Object printLog();
 
     /**
      * 日志清除
+     * @return 
      */
-    public abstract void clearLog();
+    public abstract Object clearLog();
 
 }
