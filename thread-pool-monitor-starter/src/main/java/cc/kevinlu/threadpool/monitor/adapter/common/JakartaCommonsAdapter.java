@@ -92,14 +92,15 @@ public class JakartaCommonsAdapter extends ThreadPoolTaskLoggerAdapter {
     }
 
     @Override
-    public void printLog() {
-        System.out.println(LOG_LINKED_DB);
+    public Object printLog() {
+        return LOG_LINKED_DB;
     }
 
     @Override
-    public void clearLog() {
-        printLog();
+    public Object clearLog() {
+        Object log = printLog();
         LOG_LINKED_DB.clear();
+        return log;
     }
 
     @Data

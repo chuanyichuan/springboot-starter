@@ -11,6 +11,7 @@ import org.springframework.boot.actuate.endpoint.annotation.Endpoint;
 import org.springframework.boot.actuate.endpoint.annotation.ReadOperation;
 import org.springframework.context.annotation.Configuration;
 
+import cc.kevinlu.threadpool.monitor.adapter.AdapterFactory;
 import cc.kevinlu.threadpool.monitor.manager.ThreadPoolMonitorManager;
 
 /**
@@ -49,6 +50,16 @@ public class ThreadPoolEndpoint {
         });
         metricMap.put(METRIC_NAME, pools);
         return metricMap;
+    }
+
+    @ReadOperation
+    public Object log() {
+        return AdapterFactory.getLog().printLog();
+    }
+
+    @ReadOperation
+    public Object clear() {
+        return AdapterFactory.getLog().clearLog();
     }
 
 }
